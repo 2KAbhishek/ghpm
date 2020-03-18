@@ -9,34 +9,28 @@
 ![Contributors](https://img.shields.io/github/contributors/2kabhishek/ghpm?style=plastic&color=ff69b4&label=Contributors)
 ![Followers](https://img.shields.io/github/followers/2kabhishek?style=plastic&color=blue&label=Followers)
 
-ghpm is a `<utility/tool/feature>` that allows `<insert_target_audience>` to do `<action/task_it_does>`.
-
-## Prerequisites
-
-Before you begin, ensure you have met the following requirements:
-
-* You have installed the latest version of `<coding_language/dependency/requirement_1>`
+ghpm is a utility that allows developers to quickly setup and update their github projects.
 
 ## Installing ghpm
 
 To install ghpm, follow these steps:
 
-Linux & Mac OS:
-
-```
-<install_command>
-```
-
-Windows:
-
-```
-<install_command>
+```bash
+# Clone repo
+git clone https://github.com/2kabhishek/ghpm.git
+cd ghpm
+# Setup symlink make sure target directory is added to PATH
+ln -sfnv ghpm ~/Applications/bin
 ```
 
 ## Using ghpm
 
 To use ghpm, follow these steps:
 
+Go to your projects directory and run.
+
+```bash
+ghpm # Use the menu
 ```
-<usage_example>
-```
+
+You will be asked to enter your github username.
