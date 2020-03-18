@@ -20,7 +20,7 @@ To install ghpm, follow these steps:
 git clone https://github.com/2kabhishek/ghpm.git
 cd ghpm
 # Setup symlink make sure target directory is added to PATH
-ln -sfnv ghpm ~/Applications/bin
+ln -sfnv $PWD/ghpm ~/Applications/bin
 ```
 
 ## Using ghpm
@@ -30,7 +30,7 @@ To use ghpm, follow these steps:
 Go to your projects directory and run.
 
 ```bash
-ghpm # Use the menu
+ghpm path/to/projectsdir # Use the menu
 ```
 
 You will be asked to enter your github username.
