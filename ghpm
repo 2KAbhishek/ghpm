@@ -5,12 +5,19 @@ echo
 projectdir=$1
 cd "$projectdir" || exit
 
+function get_username
+{
+    if  [ -z "$username" ]
+    then
+        echo -e " \u001b[37;1m\u001b[4m Enter GitHub Username:\u001b[0m"
+        echo -en "\u001b[32;1m ==> \u001b[0m"
+        read -r username
+    fi
+}
 
 function clone_repos
 {
-    echo -e " \u001b[37;1m\u001b[4m Enter GitHub Username:\u001b[0m"
-    echo -en "\u001b[32;1m ==> \u001b[0m"
-    read -r username
+    get_username
     echo -e "\u001b[7m Cloning repos of $username@github \u001b[0m"
     curl -s https://api.github.com/users/"$username"/repos?per_page=100 |jq -r ".[].html_url" | xargs -L1 git clone
 }
