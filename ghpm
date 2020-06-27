@@ -3,6 +3,12 @@ echo -e "\u001b[32;1m ghpm - GitHub Project Manager \u001b[0m"
 echo
 
 projectdir=$1
+
+if [ -z "$projectdir" ]
+then
+        projectdir=$PWD
+fi
+
 cd "$projectdir" || exit
 
 function get_username
