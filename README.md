@@ -1,5 +1,3 @@
-<div align="center">
-
 # ghpm
 
 ![Size](https://img.shields.io/github/repo-size/2kabhishek/ghpm?style=plastic&color=0f0&label=Size)
@@ -12,7 +10,6 @@
 
 ghpm is a utility that allows developers to quickly clone and update their github projects.
 
-</div>
 
 ## Installing ghpm
 
@@ -37,5 +34,4 @@ ghpm path/to/projectsdir # From anywhere
 
 You will be asked to enter your github username.
 
-Please consider hitting the ⭐ star button if this repo was useful to you, any contributions and suggestions are welcome.
 
