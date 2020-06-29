@@ -10,7 +10,6 @@
 
 ghpm is a utility that allows developers to quickly clone and update their github projects.
 
-
 ## Installing ghpm
 
 To install ghpm, follow these steps:
@@ -33,5 +32,3 @@ ghpm path/to/projectsdir # From anywhere
 ```
 
 You will be asked to enter your github username.
-
-
