@@ -1,4 +1,4 @@
-# ghpm
+# ghpm - GitHub Project Manager
 
 ![Size](https://img.shields.io/github/repo-size/2kabhishek/ghpm?style=plastic&color=0f0&label=Size)
 ![Updated](https://img.shields.io/github/last-commit/2kabhishek/ghpm?style=plastic&color=f00&label=Updated)
