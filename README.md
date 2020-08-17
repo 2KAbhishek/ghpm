@@ -8,7 +8,7 @@
 ![Contributors](https://img.shields.io/github/contributors/2kabhishek/ghpm?style=plastic&color=f0f&label=Contributors)
 ![License](https://img.shields.io/github/license/2kabhishek/ghpm?style=plastic&color=555&label=License)
 
-ghpm is a utility that allows developers to quickly clone and update their github projects.
+ghpm is a utility that allows developers to quickly and easily manage their github projects.
 
 ## Installing ghpm
 
