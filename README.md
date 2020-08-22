@@ -8,6 +8,8 @@
 ![Contributors](https://img.shields.io/github/contributors/2kabhishek/ghpm?style=plastic&color=f0f&label=Contributors)
 ![License](https://img.shields.io/github/license/2kabhishek/ghpm?style=plastic&color=555&label=License)
 
+![GHPM](https://dev-to-uploads.s3.amazonaws.com/i/8rl0hy56prqu361ozvzy.jpg)
+
 ghpm is a utility that allows developers to quickly and easily manage their github projects.
 
 ## Installing ghpm
