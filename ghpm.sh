@@ -83,9 +83,10 @@ do
 echo -e " \u001b[37;1m\u001b[4m Select an option:\u001b[0m"
 
 echo -e "  \u001b[34;1m (1) Clone repos \u001b[0m"
-echo -e "  \u001b[34;1m (2) Pull changes \u001b[0m"
-echo -e "  \u001b[34;1m (3) Push changes \u001b[0m"
-echo -e "  \u001b[34;1m (4) Set SSH remote \u001b[0m"
+echo -e "  \u001b[34;1m (2) Clone public repos \u001b[0m"
+echo -e "  \u001b[34;1m (3) Pull changes \u001b[0m"
+echo -e "  \u001b[34;1m (4) Push changes \u001b[0m"
+echo -e "  \u001b[34;1m (5) Set SSH remote \u001b[0m"
 
 echo -e "  \u001b[31;1m (0) Exit \u001b[0m"
 
