@@ -2,14 +2,14 @@
 echo -e "\u001b[32;1m ghpm - GitHub Project Manager \u001b[0m"
 echo
 
-projectdir=$1
+project_dir=$1
 
-if [ -z "$projectdir" ] || [[ "." == "$projectdir"  ]]
+if [ -z "$project_dir" ] || [[ "." == "$project_dir"  ]] || [ ! -d $project_dir ]
 then
-        projectdir=$PWD
+        project_dir=$PWD
 fi
 
-cd "$projectdir" || exit
+cd "$project_dir" || exit
 
 function get_username
 {
@@ -49,7 +49,7 @@ for i in $(find . -maxdepth 2 -name ".git" | cut -c 3-); do
     echo -e "\033[33m $repo \033[0m";
     echo ;
 
-    cd "$projectdir" || return
+    cd "$project_dir" || return
 done
 
 echo -e "\n\033[32m Complete! \033[0m\n"
