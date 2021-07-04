@@ -4,7 +4,7 @@ echo
 
 projectdir=$1
 
-if [ -z "$projectdir" ]
+if [ -z "$projectdir" ] || [[ "." == "$projectdir"  ]]
 then
         projectdir=$PWD
 fi
