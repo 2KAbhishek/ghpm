@@ -21,11 +21,33 @@ function get_username
     fi
 }
 
+function get_token
+{
+    if  [ -z "$token" ]
+    then
+        echo -e " \u001b[37;1m\u001b[4m Enter GitHub Token:\u001b[0m"
+        echo -en "\u001b[32;1m ==> \u001b[0m"
+        read -r token
+    fi
+}
+
 function clone_repos
 {
     get_username
+    get_token
     echo -e "\u001b[7m Cloning repos of $username@github \u001b[0m"
-    curl -s https://api.github.com/users/"$username"/repos?per_page=200 |jq -r ".[].html_url" | xargs -L1 git clone
+    echo $clone_cmd
+    curl -su "$username":"$token" https://api.github.com/user/repos?per_page=200 \
+        | jq -r ".[].ssh_url" | xargs -L1 git clone
+    echo -e "\n\033[32m Complete! \033[0m\n"
+}
+
+function clone_public_repos
+{
+    get_username
+    echo -e "\u001b[7m Cloning public repos of $username@github \u001b[0m"
+    curl -s https://api.github.com/users/"$username"/repos?per_page=200 \
+        | jq -r ".[].html_url" | xargs -L1 git clone
     echo -e "\n\033[32m Complete! \033[0m\n"
 }
 
