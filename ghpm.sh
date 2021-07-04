@@ -103,20 +103,26 @@ case $option in
     ;;
 
 "2")
+    clone_public_repos
+    echo
+    read -r
+    ;;
+
+"3")
     update=pull
     update_repos
     echo
     read -r
     ;;
 
-"3")
+"4")
     update=push
     update_repos
     echo
     read -r
     ;;
 
-"4")
+"5")
     update_repos
     echo
     read -r
