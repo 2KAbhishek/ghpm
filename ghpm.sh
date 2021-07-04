@@ -25,7 +25,7 @@ function clone_repos
 {
     get_username
     echo -e "\u001b[7m Cloning repos of $username@github \u001b[0m"
-    curl -s https://api.github.com/users/"$username"/repos?per_page=100 |jq -r ".[].html_url" | xargs -L1 git clone
+    curl -s https://api.github.com/users/"$username"/repos?per_page=200 |jq -r ".[].html_url" | xargs -L1 git clone
     echo -e "\n\033[32m Complete! \033[0m\n"
 }
 
