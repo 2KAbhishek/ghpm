@@ -42,6 +42,9 @@ function clone_repos
     echo -e "\n\033[32m Complete! \033[0m\n"
 }
 
+#curl -s "https://api.github.com/users/$username/repos?page=2&per_page=100"|\
+# jq -r ".[].ssh_url" | xargs -L1 git clone # When repo count is more than 100
+
 function clone_public_repos
 {
     get_username
