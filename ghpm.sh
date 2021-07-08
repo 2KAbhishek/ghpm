@@ -3,6 +3,8 @@ echo -e "\u001b[32;1m ghpm - GitHub Project Manager \u001b[0m"
 echo
 
 project_dir=$1
+public_repos=0
+page_count=0
 
 if [ -z "$project_dir" ] || [[ "." == "$project_dir"  ]] || [ ! -d $project_dir ]
 then
@@ -29,6 +31,14 @@ function get_token
         echo -en "\u001b[32;1m ==> \u001b[0m"
         read -r token
     fi
+}
+
+function get_public_repo_count
+{
+        public_repos=$(curl -s "https://api.github.com/users/$username" | jq -r ."public_repos")
+        echo -e "\u001b[32;1m\u001b[4m\nPublic Repository Count: $public_repos\n\u001b[0m"
+        (( page_count=public_repos/100 + 1 ))
+
 }
 
 function clone_repos
