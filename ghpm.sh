@@ -30,7 +30,7 @@ function get_token {
 
 function get_public_repo_count {
     public_repos=$(curl -s "https://api.github.com/users/$username" | jq -r ."public_repos")
-    echo -e "\u001b[32;1m\u001b[4m\nPublic Repository Count: $public_repos\n\u001b[0m"
+    echo -e "\u001b[32;1m\u001b[4m\nPublic Repository Count: $public_repos\u001b[0m"
     ((page_count = public_repos / 100 + 1))
 
 }
@@ -39,10 +39,10 @@ function clone_repos {
     get_username
     get_public_repo_count
     get_token
-    echo -e "\u001b[7m Cloning repos of $username@github \u001b[0m"
+    echo -e "\u001b[7m\n Cloning repos of $username@github \u001b[0m"
     for ((i = 1; i <= page_count; i++)); do
         curl -su "$username:$token" "https://api.github.com/user/repos?page=$i&per_page=100" |
-            jq -r ".[].ssh_url" | xargs -L1 git clone
+            jq -r ".[].ssh_url" | grep -i "$username" | xargs -L1 git clone
     done
     echo -e "\n\033[32m Complete! \033[0m\n"
 }
@@ -50,10 +50,10 @@ function clone_repos {
 function clone_public_repos {
     get_username
     get_public_repo_count
-    echo -e "\u001b[7m Cloning public repos of $username@github \u001b[0m"
+    echo -e "\u001b[7m\n Cloning public repos of $username@github \u001b[0m"
     for ((i = 1; i <= page_count; i++)); do
         curl -s "https://api.github.com/users/$username/repos?page=$i&per_page=100" |
-            jq -r ".[].html_url" | xargs -L1 git clone
+            jq -r ".[].html_url" | grep -i "$username" | xargs -L1 git clone
     done
     echo -e "\n\033[32m Complete! \033[0m\n"
 }
