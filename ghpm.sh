@@ -42,7 +42,7 @@ function clone_repos {
     echo -e "\u001b[7m\n Cloning repos of $username@github \u001b[0m"
     for ((i = 1; i <= page_count; i++)); do
         curl -su "$username:$token" "https://api.github.com/user/repos?page=$i&per_page=100" |
-            jq -r ".[].ssh_url" | grep -i "$username" | xargs -L1 git clone
+            jq -r ".[].ssh_url" | grep -i "$username" | xargs -L1 git clone --recurse-submodules --remote-submodules
     done
     echo -e "\n\033[32m Complete! \033[0m\n"
 }
@@ -53,7 +53,7 @@ function clone_public_repos {
     echo -e "\u001b[7m\n Cloning public repos of $username@github \u001b[0m"
     for ((i = 1; i <= page_count; i++)); do
         curl -s "https://api.github.com/users/$username/repos?page=$i&per_page=100" |
-            jq -r ".[].html_url" | grep -i "$username" | xargs -L1 git clone
+            jq -r ".[].html_url" | grep -i "$username" | xargs -L1 git clone --recurse-submodules --remote-submodules
     done
     echo -e "\n\033[32m Complete! \033[0m\n"
 }
