@@ -6,7 +6,7 @@ project_dir=$1
 public_repos=0
 page_count=0
 
-if [ -z "$project_dir" ] || [[ "." == "$project_dir" ]] || [ ! -d $project_dir ]; then
+if [ -z "$project_dir" ] || [[ "." == "$project_dir" ]] || [ ! -d "$project_dir" ]; then
     project_dir=$PWD
 fi
 
@@ -20,30 +20,15 @@ function get_username {
     fi
 }
 
-function get_token {
-    if [ -z "$token" ]; then
-        echo -e " \u001b[37;1m\u001b[4m Enter GitHub Token:\u001b[0m"
-        echo -en "\u001b[32;1m ==> \u001b[0m"
-        read -r token
-    fi
-}
-
 function get_public_repo_count {
     public_repos=$(curl -s "https://api.github.com/users/$username" | jq -r ."public_repos")
     echo -e "\u001b[32;1m\u001b[4m\nPublic Repository Count: $public_repos\u001b[0m"
     ((page_count = public_repos / 100 + 1))
-
 }
 
 function clone_repos {
-    get_username
-    get_public_repo_count
-    get_token
-    echo -e "\u001b[7m\n Cloning repos of $username@github \u001b[0m"
-    for ((i = 1; i <= page_count; i++)); do
-        curl -su "$username:$token" "https://api.github.com/user/repos?page=$i&per_page=100" |
-            jq -r ".[].ssh_url" | grep -i "$username" | xargs -L1 git clone --recurse-submodules --remote-submodules
-    done
+    echo -e "\u001b[7m\n Cloning all your repos from github \u001b[0m"
+    gh repo list --json sshUrl -q ".[].sshUrl" -L 500 | xargs -L1 git clone --recurse-submodules --remote-submodules
     echo -e "\n\033[32m Complete! \033[0m\n"
 }
 
@@ -64,7 +49,6 @@ function update_repos {
     for i in $(find . -maxdepth 2 -name ".git" | cut -c 3-); do
         cd "$i" || return
         cd ..
-
         repo=$(pwd | awk -F/ '{print $NF}')
 
         if [ "$update" == "pull" ] || [ "$update" == "push" ]; then
@@ -83,21 +67,18 @@ function update_repos {
 }
 
 while true; do
-
     echo -e " \u001b[37;1m\u001b[4m Select an option:\u001b[0m"
 
-    echo -e "  \u001b[34;1m (1) Clone repos \u001b[0m"
-    echo -e "  \u001b[34;1m (2) Clone public repos \u001b[0m"
+    echo -e "  \u001b[34;1m (1) Clone own repos \u001b[0m"
+    echo -e "  \u001b[34;1m (2) Clone public repos of others \u001b[0m"
     echo -e "  \u001b[34;1m (3) Pull changes \u001b[0m"
     echo -e "  \u001b[34;1m (4) Push changes \u001b[0m"
     echo -e "  \u001b[34;1m (5) Set SSH remote \u001b[0m"
-
     echo -e "  \u001b[31;1m (0) Exit \u001b[0m"
 
     echo -en "\u001b[32;1m ==> \u001b[0m"
 
     read -r option
-
     case $option in
 
     "1")
@@ -132,8 +113,7 @@ while true; do
         read -r
         ;;
 
-    \
-        "0")
+    "0")
         echo -e "\u001b[32;1m Bye! \u001b[0m"
         exit 0
         ;;
@@ -144,5 +124,4 @@ while true; do
         ;;
 
     esac
-
 done
