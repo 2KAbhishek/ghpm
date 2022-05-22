@@ -10,6 +10,10 @@ fi
 
 cd "$project_dir" || exit
 
+function clone_self_repos {
+    gh repo list --json sshUrl -q ".[].sshUrl" -L 500 | xargs -L1 gh repo clone
+}
+
 function get_username {
     if [ -z "$username" ]; then
         echo -e " \u001b[37;1m\u001b[4m Enter GitHub Username:\u001b[0m"
@@ -22,12 +26,6 @@ function get_public_repo_count {
     public_repos=$(curl -s "https://api.github.com/users/$username" | jq -r ."public_repos")
     echo -e "\u001b[32;1m\u001b[4m\nPublic Repository Count: $public_repos\u001b[0m"
     ((page_count = public_repos / 100 + 1))
-}
-
-function clone_repos {
-    echo -e "\u001b[7m\n Cloning all your repos from github \u001b[0m"
-    gh repo list --json sshUrl -q ".[].sshUrl" -L 500 | xargs -L1 git clone --recurse-submodules --remote-submodules
-    echo -e "\n\033[32m Complete! \033[0m\n"
 }
 
 function clone_public_repos {
@@ -80,8 +78,7 @@ while true; do
     case $option in
 
     "1")
-        clone_repos
-        echo
+        clone_self_repos
         read -r
         ;;
 
