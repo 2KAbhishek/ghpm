@@ -36,9 +36,8 @@ function clone_public_repos {
     echo -e "\u001b[7m\n Cloning public repos of $username@github \u001b[0m"
     for ((i = 1; i <= page_count; i++)); do
         curl -s "https://api.github.com/users/$username/repos?page=$i&per_page=100" |
-            jq -r ".[].html_url" | grep -i "$username" | xargs -L1 git clone --recurse-submodules --remote-submodules
+            jq -r ".[].html_url" | grep -i "$username" | xargs -L1 git clone
     done
-    echo -e "\n\033[32m Complete! \033[0m\n"
 }
 
 function update_repos {
