@@ -96,9 +96,11 @@ while true; do
         ;;
 
     "3")
-        update=pull
-        update_repos
-        echo
+        echo -e " \u001b[37;1m\u001b[4m Enter command to run (e.g: git pull) \u001b[0m"
+        echo -en "\u001b[32;1m ==> \u001b[0m"
+        read -r custom_command
+        repo_operation "custom" "$custom_command"
+        success
         read -r
         ;;
 
