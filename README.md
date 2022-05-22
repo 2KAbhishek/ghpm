@@ -35,7 +35,11 @@
 
 ## What is this
 
-ghpm is a `<utility/tool/feature>` that allows `<insert_target_audience>` to do `<action/task_it_does>`.
+ghpm is a utility that allows you to manage all your GitHub projects by allowing batch operations.
+
+You can clone all of your or any other user's repos at once.
+
+You can use it to push, pull and do any other operation on all your projects at once.
 
 ## Inspiration
 
@@ -86,7 +90,6 @@ Figuring out the GitHub api and authentication was a challenge, I used `gh` to d
 - Best practices for `bash` scripts
 - Bash functions and how it handles variables
 - Used `awk`, `find`, `xargs` and other useful tools.
-
 
 Hit the ⭐ button if you found this useful.
 
