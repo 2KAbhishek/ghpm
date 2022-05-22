@@ -3,8 +3,6 @@ echo -e "\u001b[32;1m ghpm - GitHub Project Manager \u001b[0m"
 echo
 
 project_dir=$1
-public_repos=0
-page_count=0
 
 if [ -z "$project_dir" ] || [[ "." == "$project_dir" ]] || [ ! -d "$project_dir" ]; then
     project_dir=$PWD
