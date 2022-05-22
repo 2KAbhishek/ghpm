@@ -63,7 +63,6 @@ function repo_operation {
             ;;
 
         esac
-
         cd "$project_dir" || return
     done
 }
@@ -73,7 +72,7 @@ while true; do
 
     echo -e "  \u001b[34;1m (1) Clone own repos (requires GitHub CLI) \u001b[0m"
     echo -e "  \u001b[34;1m (2) Clone public repos of others \u001b[0m"
-    echo -e "  \u001b[34;1m (2) Run command in all repos \u001b[0m"
+    echo -e "  \u001b[34;1m (3) Run command in all repos \u001b[0m"
     echo -e "  \u001b[34;1m (4) Set SSH remote \u001b[0m"
     echo -e "  \u001b[31;1m (0) Exit \u001b[0m"
 
