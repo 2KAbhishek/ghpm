@@ -40,27 +40,29 @@ function clone_public_repos {
     done
 }
 
-function update_repos {
-    echo -e "\n\033[1m  Updating all repositories. \033[0m\n"
 
+function repo_operation {
     for i in $(find . -maxdepth 2 -name ".git" | cut -c 3-); do
         cd "$i" || return
         cd ..
         repo=$(pwd | awk -F/ '{print $NF}')
 
-        if [ "$update" == "pull" ] || [ "$update" == "push" ]; then
-            git "$update"
-        else
+        case "$1" in
+        "ssh-remote")
+            echo -e "\u001b[7m\n Setting ssh remote for $repo \u001b[0m"
             get_username
             git remote set-url origin git@github.com:"${username}/${repo}.git"
-        fi
-        echo -e "\033[33m $repo \033[0m"
-        echo
+            ;;
+
+        "custom")
+            echo -e "\u001b[7m\n Running $2 in $repo \u001b[0m"
+            $2
+            ;;
+
+        esac
 
         cd "$project_dir" || return
     done
-
-    echo -e "\n\033[32m Complete! \033[0m\n"
 }
 
 while true; do
