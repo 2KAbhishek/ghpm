@@ -71,11 +71,10 @@ function repo_operation {
 while true; do
     echo -e " \u001b[37;1m\u001b[4m Select an option:\u001b[0m"
 
-    echo -e "  \u001b[34;1m (1) Clone own repos \u001b[0m"
+    echo -e "  \u001b[34;1m (1) Clone own repos (requires GitHub CLI) \u001b[0m"
     echo -e "  \u001b[34;1m (2) Clone public repos of others \u001b[0m"
-    echo -e "  \u001b[34;1m (3) Pull changes \u001b[0m"
-    echo -e "  \u001b[34;1m (4) Push changes \u001b[0m"
-    echo -e "  \u001b[34;1m (5) Set SSH remote \u001b[0m"
+    echo -e "  \u001b[34;1m (2) Run command in all repos \u001b[0m"
+    echo -e "  \u001b[34;1m (4) Set SSH remote \u001b[0m"
     echo -e "  \u001b[31;1m (0) Exit \u001b[0m"
 
     echo -en "\u001b[32;1m ==> \u001b[0m"
@@ -105,15 +104,7 @@ while true; do
         ;;
 
     "4")
-        update=push
-        update_repos
-        echo
-        read -r
-        ;;
-
-    "5")
-        update_repos
-        echo
+        repo_operation "ssh-remote"
         success
         read -r
         ;;
