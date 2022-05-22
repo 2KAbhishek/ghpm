@@ -43,7 +43,7 @@ You can use it to push, pull and do any other operation on all your projects at 
 
 ## Inspiration
 
-ghpm was inspired by `<reason/idea>`.
+I have a lot of repos on my GitHub and maintaining them was becoming a pain, also this makes moving my work to a new machine really smooth.
 
 ## Prerequisites
 
