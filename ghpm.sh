@@ -22,15 +22,17 @@ function get_username {
     fi
 }
 
-function get_public_repo_count {
+function get_page_count {
+    page_count=0
     public_repos=$(curl -s "https://api.github.com/users/$username" | jq -r ."public_repos")
+
     echo -e "\u001b[32;1m\u001b[4m\nPublic Repository Count: $public_repos\u001b[0m"
     ((page_count = public_repos / 100 + 1))
 }
 
 function clone_public_repos {
     get_username
-    get_public_repo_count
+    get_page_count
     echo -e "\u001b[7m\n Cloning public repos of $username@github \u001b[0m"
     for ((i = 1; i <= page_count; i++)); do
         curl -s "https://api.github.com/users/$username/repos?page=$i&per_page=100" |
