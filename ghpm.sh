@@ -40,6 +40,9 @@ function clone_public_repos {
     done
 }
 
+function success {
+    echo -e "\n\033[32m Complete! \033[0m\n"
+}
 
 function repo_operation {
     for i in $(find . -maxdepth 2 -name ".git" | cut -c 3-); do
@@ -82,12 +85,13 @@ while true; do
 
     "1")
         clone_self_repos
+        success
         read -r
         ;;
 
     "2")
         clone_public_repos
-        echo
+        success
         read -r
         ;;
 
@@ -108,6 +112,7 @@ while true; do
     "5")
         update_repos
         echo
+        success
         read -r
         ;;
 
