@@ -26,7 +26,7 @@
 <h3>The GitHub Project Manager 🧑‍💻⚙️</h3>
 
 <figure>
-  <img src= "images/screenshot.jpg" alt="ghpm Demo" style="width:100%">
+  <img src= "images/screenshot.png" alt="ghpm Demo" style="width:100%">
   <br/>
   <figcaption>ghpm screenshot</figcaption>
 </figure>
