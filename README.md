@@ -47,7 +47,7 @@ I have a lot of repos on my GitHub and maintaining them was becoming a pain, als
 Before you begin, ensure you have met the following requirements:
 
 - You have installed the latest version of `bash`
-- Cloning self repos needs authentication and relies on `gh`, the github cli
+- Cloning self repos needs authentication and relies on `gh`, the GitHub cli
 
 ## Getting ghpm
 
@@ -57,12 +57,12 @@ To install ghpm, follow these steps:
 git clone https://github.com/2kabhishek/ghpm.git
 cd ghpm
 # Setup symlink make sure target directory is added to PATH
-ln -sfnv $PWD/ghpm.sh ~/Applications/bin/ghpm
+ln -sfnv $PWD/ghpm.sh ~/.local//bin/ghpm
 ```
 
 ## Using ghpm
 
-After symlinking, you can run `ghpm` in your GitHub repos parent directory or you can pass it in as an argument
+After symlinking, you can run `ghpm` in your GitHub repos parent directory, or you can pass it in as an argument
 
 ```bash
 ghpm
@@ -80,7 +80,7 @@ ghpm was built using `bash`
 
 ## Challenges faced
 
-Figuring out the GitHub api and authentication was a challenge, I used `gh` to do some of the heavy lifting.
+Figuring out the GitHub api and authentication was a challenge, I used `gh` to do some heavy lifting.
 
 ## What I learned
 
