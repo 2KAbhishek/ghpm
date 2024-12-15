@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 echo -e "\u001b[32;1m ghpm - GitHub Project Manager \u001b[0m"
 echo
 
