@@ -22,22 +22,24 @@ function get_username {
     fi
 }
 
-function get_page_count {
-    page_count=0
-    public_repos=$(curl -s "https://api.github.com/users/$username" | jq -r ."public_repos")
-
-    echo -e "\u001b[32;1m\u001b[4m\nPublic Repository Count: $public_repos\u001b[0m"
-    ((page_count = public_repos / 100 + 1))
-}
-
 function clone_public_repos {
     get_username
-    get_page_count
+    [[ -z "$username" ]] && return
+
     echo -e "\u001b[7m\n Cloning public repos of $username@github \u001b[0m"
-    for ((i = 1; i <= page_count; i++)); do
-        curl -s "https://api.github.com/users/$username/repos?page=$i&per_page=100" |
-            jq -r ".[].html_url" | grep -i "$username" | xargs -L1 git clone
-    done
+    if command -v gh &>/dev/null; then
+        gh repo list "$username" --limit 1000 --json url -q ".[].url" | xargs -L1 git clone
+    else
+        local public_repos
+        public_repos=$(curl -s "https://api.github.com/users/$username" | jq -r '.public_repos // 0' 2>/dev/null)
+        if [[ "$public_repos" =~ ^[0-9]+$ ]] && [ "$public_repos" -gt 0 ]; then
+            local page_count=$(( (public_repos + 99) / 100 ))
+            for ((i = 1; i <= page_count; i++)); do
+                curl -s "https://api.github.com/users/$username/repos?page=$i&per_page=100" |
+                    jq -r '.[].html_url // empty' 2>/dev/null | xargs -L1 git clone
+            done
+        fi
+    fi
 }
 
 function success {
