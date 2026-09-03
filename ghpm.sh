@@ -60,32 +60,33 @@ function to_ssh_url {
 }
 
 function repo_operation {
-    for i in $(find . -maxdepth 2 -name ".git" | cut -c 3-); do
-        cd "$i" || return
-        cd ..
-        repo=$(pwd | awk -F/ '{print $NF}')
+    for git_dir in */.git; do
+        [[ -d "$git_dir" ]] || continue
+        local repo="${git_dir%/.git}"
 
-        case "$1" in
-        "ssh-remote")
-            echo -e "\u001b[7m\n Setting ssh remote for $repo \u001b[0m"
-            local current_url
-            current_url=$(git remote get-url origin 2>/dev/null || true)
-            if [ -n "$current_url" ]; then
-                local ssh_url
-                ssh_url=$(to_ssh_url "$current_url")
-                git remote set-url origin "$ssh_url"
-            else
-                echo "No origin remote found for $repo"
-            fi
-            ;;
+        (
+            cd "$repo" || exit 1
+            case "$1" in
+            "ssh-remote")
+                echo -e "\u001b[7m\n Setting ssh remote for $repo \u001b[0m"
+                local current_url
+                current_url=$(git remote get-url origin 2>/dev/null || true)
+                if [ -n "$current_url" ]; then
+                    local ssh_url
+                    ssh_url=$(to_ssh_url "$current_url")
+                    git remote set-url origin "$ssh_url"
+                else
+                    echo "No origin remote found for $repo"
+                fi
+                ;;
 
-        "custom")
-            echo -e "\u001b[7m\n Running $2 in $repo \u001b[0m"
-            $2
-            ;;
+            "custom")
+                echo -e "\u001b[7m\n Running $2 in $repo \u001b[0m"
+                eval "$2"
+                ;;
 
-        esac
-        cd "$project_dir" || return
+            esac
+        )
     done
 }
 
