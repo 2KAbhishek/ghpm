@@ -44,6 +44,21 @@ function success {
     echo -e "\n\033[32m Complete! \033[0m\n"
 }
 
+function to_ssh_url {
+    local url="$1"
+    if [[ "$url" =~ ^git@ ]]; then
+        [[ "$url" != *.git ]] && url="${url}.git"
+        echo "$url"
+        return
+    fi
+    url="${url%.git}"
+    url="${url#*://}"
+    url="${url#*@}"
+    local host="${url%%/*}"
+    local path="${url#*/}"
+    echo "git@${host}:${path}.git"
+}
+
 function repo_operation {
     for i in $(find . -maxdepth 2 -name ".git" | cut -c 3-); do
         cd "$i" || return
@@ -53,8 +68,15 @@ function repo_operation {
         case "$1" in
         "ssh-remote")
             echo -e "\u001b[7m\n Setting ssh remote for $repo \u001b[0m"
-            get_username
-            git remote set-url origin git@github.com:"${username}/${repo}.git"
+            local current_url
+            current_url=$(git remote get-url origin 2>/dev/null || true)
+            if [ -n "$current_url" ]; then
+                local ssh_url
+                ssh_url=$(to_ssh_url "$current_url")
+                git remote set-url origin "$ssh_url"
+            else
+                echo "No origin remote found for $repo"
+            fi
             ;;
 
         "custom")
