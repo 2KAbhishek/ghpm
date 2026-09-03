@@ -56,8 +56,12 @@ To install ghpm, follow these steps:
 ```bash
 git clone https://github.com/2kabhishek/ghpm.git
 cd ghpm
-# Setup symlink make sure target directory is added to PATH
-ln -sfnv $PWD/ghpm.sh ~/.local//bin/ghpm
+
+# Automated setup
+./setup.sh
+
+# Or manual symlink
+ln -sfnv "$PWD/ghpm.sh" ~/.local/bin/ghpm
 ```
 
 ## Using ghpm
