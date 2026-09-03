@@ -1,6 +1,16 @@
 #!/usr/bin/env bash
-echo -e "\u001b[32;1m ghpm - GitHub Project Manager \u001b[0m"
-echo
+
+# Color definitions
+C_RESET=$'\033[0m'
+C_BOLD=$'\033[1m'
+C_UNDERLINE=$'\033[4m'
+C_GREEN=$'\033[32;1m'
+C_BLUE=$'\033[34;1m'
+C_RED=$'\033[31;1m'
+C_WHITE=$'\033[37;1m'
+C_REV=$'\033[7m'
+
+echo -e "${C_GREEN} ghpm - GitHub Project Manager ${C_RESET}\n"
 
 project_dir=$1
 
@@ -10,14 +20,23 @@ fi
 
 cd "$project_dir" || exit
 
+function check_gh {
+    if ! command -v gh &>/dev/null; then
+        echo -e "${C_RED}Error: GitHub CLI (gh) is not installed.${C_RESET}"
+        return 1
+    fi
+}
+
 function clone_self_repos {
+    check_gh || return 1
+    echo -e "${C_REV}\n Cloning own repositories via GitHub CLI... ${C_RESET}"
     gh repo list --json sshUrl -q ".[].sshUrl" -L 500 | xargs -L1 gh repo clone
 }
 
 function get_username {
     if [ -z "$username" ]; then
-        echo -e " \u001b[37;1m\u001b[4m Enter GitHub Username:\u001b[0m"
-        echo -en "\u001b[32;1m ==> \u001b[0m"
+        echo -e " ${C_WHITE}${C_UNDERLINE}Enter GitHub Username:${C_RESET}"
+        echo -en "${C_GREEN} ==> ${C_RESET}"
         read -r username
     fi
 }
@@ -26,7 +45,7 @@ function clone_public_repos {
     get_username
     [[ -z "$username" ]] && return
 
-    echo -e "\u001b[7m\n Cloning public repos of $username@github \u001b[0m"
+    echo -e "${C_REV}\n Cloning public repos of $username@github ${C_RESET}"
     if command -v gh &>/dev/null; then
         gh repo list "$username" --limit 1000 --json url -q ".[].url" | xargs -L1 git clone
     else
@@ -43,7 +62,7 @@ function clone_public_repos {
 }
 
 function success {
-    echo -e "\n\033[32m Complete! \033[0m\n"
+    echo -e "\n${C_GREEN} Complete! ${C_RESET}\n"
 }
 
 function to_ssh_url {
@@ -70,7 +89,7 @@ function repo_operation {
             cd "$repo" || exit 1
             case "$1" in
             "ssh-remote")
-                echo -e "\u001b[7m\n Setting ssh remote for $repo \u001b[0m"
+                echo -e "${C_REV}\n Setting ssh remote for $repo ${C_RESET}"
                 local current_url
                 current_url=$(git remote get-url origin 2>/dev/null || true)
                 if [ -n "$current_url" ]; then
@@ -83,7 +102,7 @@ function repo_operation {
                 ;;
 
             "custom")
-                echo -e "\u001b[7m\n Running $2 in $repo \u001b[0m"
+                echo -e "${C_REV}\n Running $2 in $repo ${C_RESET}"
                 eval "$2"
                 ;;
 
@@ -93,15 +112,15 @@ function repo_operation {
 }
 
 while true; do
-    echo -e " \u001b[37;1m\u001b[4m Select an option:\u001b[0m"
+    echo -e " ${C_WHITE}${C_UNDERLINE}Select an option:${C_RESET}"
 
-    echo -e "  \u001b[34;1m (1) Clone own repos (requires GitHub CLI) \u001b[0m"
-    echo -e "  \u001b[34;1m (2) Clone public repos of others \u001b[0m"
-    echo -e "  \u001b[34;1m (3) Run command in all repos \u001b[0m"
-    echo -e "  \u001b[34;1m (4) Set SSH remote \u001b[0m"
-    echo -e "  \u001b[31;1m (0) Exit \u001b[0m"
+    echo -e "  ${C_BLUE} (1) Clone own repos (requires GitHub CLI) ${C_RESET}"
+    echo -e "  ${C_BLUE} (2) Clone public repos of others ${C_RESET}"
+    echo -e "  ${C_BLUE} (3) Run command in all repos ${C_RESET}"
+    echo -e "  ${C_BLUE} (4) Set SSH remote ${C_RESET}"
+    echo -e "  ${C_RED} (0) Exit ${C_RESET}"
 
-    echo -en "\u001b[32;1m ==> \u001b[0m"
+    echo -en "${C_GREEN} ==> ${C_RESET}"
 
     read -r option
     case $option in
@@ -119,8 +138,8 @@ while true; do
         ;;
 
     "3")
-        echo -e " \u001b[37;1m\u001b[4m Enter command to run (e.g: git pull) \u001b[0m"
-        echo -en "\u001b[32;1m ==> \u001b[0m"
+        echo -e " ${C_WHITE}${C_UNDERLINE}Enter command to run (e.g: git pull)${C_RESET}"
+        echo -en "${C_GREEN} ==> ${C_RESET}"
         read -r custom_command
         repo_operation "custom" "$custom_command"
         success
@@ -134,12 +153,12 @@ while true; do
         ;;
 
     "0")
-        echo -e "\u001b[32;1m Bye! \u001b[0m"
+        echo -e "${C_GREEN} Bye! ${C_RESET}"
         exit 0
         ;;
 
     *)
-        echo -e "\u001b[31;1m Invalid option entered! \u001b[0m"
+        echo -e "${C_RED} Invalid option entered! ${C_RESET}"
         exit 1
         ;;
 
